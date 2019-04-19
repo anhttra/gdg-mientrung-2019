@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<style>
+body, html {
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  background-color: #9cbbde;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bg-img {
+  /* The image used */
+  background-image: url("http://1266b9k5nh047m4qk1509101-wpengine.netdna-ssl.com/wp-content/uploads/2017/02/dogcatcare1.jpg");
+
+  min-height: 880px;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+h1 {
+	color:white;
+	float:center;
+	text-align: center;
+	padding-top: 150px;
+	padding-bottom: 50px;
+	text-shadow: 1px 1px 1px #000
+}
+
+form {
+	display: inline-block;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	text-align: left;
+	border: 1px solid #aaaaaa;
+   	border-radius: 4px;
+   	/*background: #9cbb11*/
+}
+
+table {
+	margin-top: 150px;
+	margin-bottom: 150px;
+	max-width: 50%;
+	border-radius: 5px;
+	width: 50%;
+	margin: 0px auto;
+}
+
+</style>
+<title >Cat-Dog Classification</title>
+</head>
+
+<body>
+	<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Back</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="/" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+
+<div class ="bg-img">
+	<h1 class="display-2 text-success">Cat - Dog Classification</h1>
+	<div class="container">
+	<span > 
+	<form action="/predict_upload" method=post enctype=multipart/form-data class="shadow rounded bg-light">
+		<p class="h4">Do not know cat or dog? Upload and let us guest!</p>
+		<input type="file" name="pic" accept="image/*">
+		<input type="submit" value="UPLOAD" class="float-right">
+	</form></span>
+</div>
+<br/><br/><br/>
+{%if result['class'] >= 0 %}
+<div class = "container">
+	<table class="table table-striped table-dark shadow rounded">
+		<tbody>
+			<tr>
+		<td><img src="{{ result['image'] }}"" alt="" class="img-thumbnail" width="256" height="256"></td>
+		{% if result['class'] == 0 %}
+		<td class="align-middle">It's a cat</td>
+		{% else %}
+		<td class="align-middle">It's a dog</td>
+		{% endif %}
+		<td class="align-middle">Confident {{'%0.2f' % (result['confidence'])}} %</td>
+		<td class="align-middle">Process in {{'%0.2f' % (result['eslapse'])}} millisec</td>
+	</tr>
+</tbody>
+</table>
+</div>
+	{% endif %}
+</div>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>
